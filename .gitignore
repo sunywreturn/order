@@ -1,0 +1,30 @@
+# Eclipse IDE
+.classpath
+
+# Cursor IDE
+.cursor/
+
+# Log directories
+log/
+tomcat/logs/
+
+# Tomcat work directory
+tomcat/work/
+tomcat/work/Tomcat/
+tomcat/work/Tomcat/localhost/
+tomcat/work/Tomcat/localhost/order/
+
+# Maven target directory
+target/
+
+# IDE files
+*.iml
+
+# Temporary files
+*.log
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+Thumbs.db

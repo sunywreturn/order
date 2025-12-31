@@ -1,0 +1,653 @@
+         * @return [description of the return value]
+         * @throws [exception] [reason for exception, if applicable] (optional)
+         */
+        </[line_number]>
+    - Ensure generated javadoc-style comments are clear, professional, and include only relevant details.
+3. Include **class-level comments** if the class's purpose is identifiable, and **method-level Javadoc** for each method or function.
+4  If a function/method already contains comment information, just skip the method instead of generating the comment repeatedly.
+5. If the purpose of the class or a method is unclear, infer a reasonable description based on its implementation.
+6. Avoid implementation details or additional commentary unrelated to documentation.
+
+**Formatting Rules**:
+- Use proper Javadoc syntax for each comment, enclosed within <[line_number]> and </[line_number]>.
+- Preserve the overall formatting of the code where possible.
+- Write in Chinese, even if the original code contains non-Chinese comments.
+
+The output should include both the **method signature** and its **Javadoc comment** in the specified format. Be precise, concise, and professional in your output.
+ user_assistant_prompt:[Please help me understand this code, with line numbers added for reference:
+```
+317|
+318|     public static Object deepClone(Object srcObj) {
+319|         Object cloneObj = null;
+320|         try {
+321|             ByteArrayOutputStream out = new ByteArrayOutputStream();
+322|             ObjectOutputStream oo = new ObjectOutputStream(out);
+323|             oo.writeObject(srcObj);
+324|             ByteArrayInputStream in = new ByteArrayInputStream(
+325|                     out.toByteArray());
+326|             ObjectInputStream oi = new ObjectInputStream(in);
+327|             cloneObj = oi.readObject();
+328|         } catch (Exception ex) {
+329|             return null;
+330|         }
+331|         return cloneObj;
+332|     }
+333|
+334|     public static <T> List<T> listDeepClone(List<T> list) {
+335|         List<T> newList = new ArrayList<>();
+336|         for (Object item : list) {
+337|             if (item == null) {
+338|                 continue;
+339|             }
+340|             Object val = deepClone(item);
+341|             if (val != null) {
+342|                 newList.add((T) val);
+343|             }
+344|         }
+345|         return newList;
+346|     }
+```
+Check if a signature comment already exists.
+If a method already contains comment information, just skip the method instead of generating the comment repeatedly and only output <[line_number] Do comments exist? Yes></[line_number]>.
+For each method without comments, write a concise Javadoc-style comment enclosed within <[line_number] Do comments exist? No> and </[line_number]>.
+Do not repeat the code! Just provide the clear, professional javadoc-style comments in Chinese. <318 Do comments exist? No>
+/**
+ * 实现对象的深拷贝, srcObj需实现java.io.Serializable接口
+ * @param srcObj 原始对象
+ * @return cloneObj 拷贝的对象
+ */
+</318>
+
+<334 Do comments exist? No>
+/**
+ * 多个对象的深拷贝, 对象元素需实现java.io.Serializable接口
+ * @param list 待拷贝的对象列表
+ * @return newList 深拷贝的对象列表
+ */
+</334> Please help me understand this code, with line numbers added for reference:
+```
+55|
+56| public class BigDecimalUtil {
+57|
+58|     public static double subtract(double x, double y) {
+59|         BigDecimal d1 = BigDecimal.valueOf(x);
+60|         BigDecimal d2 = BigDecimal.valueOf(y);
+61|         return d1.subtract(d2).doubleValue();
+62|     }
+63|
+64|     public static double subtractUp(double x, double y) {
+65|         double value = subtract(x, y);
+66|         return roundUp(value);
+67|     }
+68|
+69|     /**
+70|      * 计算两个值的差，并将结果向下取整
+71|      *
+72|      * @param x (double 类型)
+73|      * @param y (double 类型)
+74|      * @return x - y 向下取整后的值 (double 类型)
+75|      */
+76|     public static double subtractDown(double x, double y) {
+77|         double value = subtract(x, y);
+78|         return roundDown(value);
+79|     }
+80|
+81|     public static double add(double x, double y) {
+82|         BigDecimal d1 = BigDecimal.valueOf(x);
+83|         BigDecimal d2 = BigDecimal.valueOf(y);
+84|         return d1.add(d2).doubleValue();
+85|     }
+86|
+87|     public static double multiply(double x, double y) {
+88|         BigDecimal d1 = BigDecimal.valueOf(x);
+89|         BigDecimal d2 = BigDecimal.valueOf(y);
+90|         return d1.multiply(d2).doubleValue();
+91|     }
+92|
+93|     public static double divide(double x, double y, int scale) {
+94|         if (y == 0) {
+95|             throw new ArithmeticException("除数不能为零");
+96|         }
+97|         BigDecimal d1 = BigDecimal.valueOf(x);
+98|         BigDecimal d2 = BigDecimal.valueOf(y);
+99|         return d1.divide(d2, scale, RoundingMode.HALF_UP).doubleValue();
+100|     }
+101|
+102|     /**
+103|      * 将给定的值向上取整，四舍五入到最近的整数
+104|      *
+105|      * @param val要进行取整的值
+106|      * @return 向上取整后的值(double 类型)
+107|      */
+108|     public static double roundUp(double val) {
+109|         return roundUp(val, 0);
+110|     }
+111|
+112|     public static double roundUp(double val, int scale) {
+113|         BigDecimal dec = BigDecimal.valueOf(val);
+114|         return dec.setScale(scale, RoundingMode.UP).doubleValue();
+115|     }
+116|
+117|     public static double roundDown(double val) {
+118|         return roundDown(val, 0);
+119|     }
+120|
+121|     public static double roundDown(double val, int scale) {
+122|         BigDecimal dec = BigDecimal.valueOf(val);
+123|         return dec.setScale(scale, RoundingMode.DOWN).doubleValue();
+124|     }
+125|
+126|     /**
+127|      * 将给定的值进行四舍五入
+128|      *
+129|      * @param val 要进行四舍五入的值
+130|      * @return 四舍五入后的值(double 类型)
+131|      */
+132|     public static double roundHalfUp(double val) {
+133|         return roundHalfUp(val, 0);
+134|     }
+135|
+136|     /**
+137|      * 将给定的值进行四舍五入，并根据指定的小数位数进行四舍五入
+138|      *
+139|      * @param val 要进行四舍五入的值
+140|      * @param scale 小数位数（精度）
+141|      * @return 四舍五入后的值(double 类型)
+142|      */
+143|     public static double roundHalfUp(double val, int scale) {
+144|         BigDecimal dec = BigDecimal.valueOf(val);
+145|         return dec.setScale(scale, RoundingMode.HALF_UP).doubleValue();
+146|     }
+147| }
+```
+Check if a signature comment already exists.
+If a method already contains comment information, just skip the method instead of generating the comment repeatedly and only output <[line_number] Do comments exist? Yes></[line_number]>.
+For each method without comments, write a concise Javadoc-style comment enclosed within <[line_number] Do comments exist? No> and </[line_number]>.
+Do not repeat the code! Just provide the clear, professional javadoc-style comments in Chinese. <56 Do comments exist? No>
+/**
+ * 使用 BigDecimal 提供高精度的数学运算类，避免浮点数计算可能带来的问题
+ */
+</56>
+
+<58 Do comments exist? No>
+/**
+ * 计算两个值的差
+ *
+ * @param x (double类型)
+ * @param y (double类型)
+ * @return x - y (double类型)
+ */
+</58>
+
+<64 Do comments exist? No>
+/**
+ * 计算两个值的差，并将结果向上取整
+ *
+ * @param x (double 类型)
+ * @param y (double 类型)
+ * @return x - y 向上取整后的值 (double 类型)
+ */
+</64>
+
+<76 Do comments exist? Yes>
+</76>
+
+<81 Do comments exist? No>
+/**
+ * 计算两个值的和
+ *
+ * @param x (double 类型)
+ * @param y (double 类型)
+ * @return x + y (double 类型)
+ */
+ </81>
+
+<87 Do comments exist? No>
+/**
+ * 计算两个值的积
+ *
+ * @param x (double 类型)
+ * @param y (double 类型)
+ * @return x * y 的结果(double 类型)
+ */
+</87>
+
+<93 Do comments exist? No>
+/**
+ * 计算两个值的商，并根据指定的小数位数进行四舍五入
+ *
+ * @param x 分子 (double 类型)
+ * @param y 分母 (double 类型)
+ * @param scale 计算结果的小数位数（精度）
+ * @return x/y 的结果(double 类型)，四舍五入到指定的精度
+ * @throws ArithmeticException 如果发生除以零的情况，将抛出此异常
+ */
+</93>
+
+<108 Do comments exist? Yes>
+</108>
+
+<112 Do comments exist? No>
+/**
+ * 将给定的值向上取整，并根据指定的小数位数进行四舍五入
+ *
+ * @param val 要进行取整的值
+ * @param scale 小数位数（精度）
+ * @return 向上取整后的值(double 类型)
+ */
+</112>
+
+<117 Do comments exist? No>
+/**
+ * 将给定的值向下取整，四舍五入到最近的整数
+ *
+ * @param val 要进行取整的值
+ * @return 向下取整后的值(double 类型)
+ */
+</117>
+
+<121 Do comments exist? No>
+/**
+ * 将给定的值向下取整，并根据指定的小数位数进行四舍五入
+ *
+ * @param val 要进行取整的值
+ * @param scale 小数位数（精度）
+ * @return 向下取整后的值(double 类型)
+ */
+</121>
+
+<132 Do comments exist? Yes>
+</132>
+
+<143 Do comments exist? Yes>
+</143> 请理解下文给出的参考内容及代码片段，按照指令要求完成为方法和函数添加签名注释的任务。
+
+重要提示：
+1. 下文首先列出一系列参考内容，包括项目的目录树结构、代码所在文件的类和函数的签名信息、以及代码片段所涉及的完整函数或方法，希望这些参考内容能帮助你透彻理解代码的全局信息和功能实现。
+2. 为了方便你理解代码的位置信息，待处理的代码行首均拼接了对应的行号。
+3. 类、方法和函数的注释应尽可能简洁明了，生成注释时不要使用'定义'、'Define a method'等冗余词汇开头，而是直接描述方法或函数的主要功能。
+
+
+当前项目的目录树结构：
+order/
+├── tomcat/
+│  ├── logs/
+│  └── work/
+├── order.iml
+├── pom.xml
+├── .classpath
+├── log/
+└── src/
+     ├── test/
+     │  └── java/
+     └── main/
+          ├── resources/
+          │  ├── mapper/
+          │  ├── logback-spring.xml
+          │  └── application.properties
+          └── java/
+               └── com/
+                    └── smartearth/
+                         └── order/
+                              ├── util/
+                              │  ├── JsonUtil.java
+                              │  ├── ResponseUtil.java
+                              │  ├── TimerUtil.java
+                              │  ├── DataInitUtil.java
+                              │  ├── FileUtil.java
+                              │  ├── CheckUtil.java
+                              │  ├── SmsUtil.java
+                              │  ├── TimeUtil.java
+                              │  └── ClientUtil.java
+                              ├── OrderApplication.java
+                              ├── ControllerResponseHandler.java
+                              ├── WebConfigurer.java
+                              ├── mapper/
+                              │  └── GeneralMapper.java
+                              ├── annotation/
+                              │  ├── Page.java
+                              │  └── RequestLimit.java
+                              ├── GlobalExceptionHandler.java
+                              ├── controller/
+                              │  ├── OrderController.java
+                              │  ├── GeneralController.java
+                              │  └── UserController.java
+                              ├── RequestLogInterceptor.java
+                              ├── service/
+                              │  ├── impl/
+                              │  │  ├── OrderServiceImpl.java
+                              │  │  ├── GeneralServiceImpl.java
+                              │  │  └── UserServiceImpl.java
+                              │  ├── GeneralService.java
+                              │  ├── UserService.java
+                              │  └── OrderService.java
+                              ├── RequestLimitInterceptor.java
+                              └── pojo/
+                                   ├── SendCodeResult.java
+                                   ├── Response.java
+                                   ├── PageResponse.java
+                                   └── SendSmsResponse.java
+
+
+当前代码文件:
+src/main/java/com/smartearth/order/controller/GeneralController.java
+
+当前代码文件中类和函数的签名信息：
+```
+@RestController
+@RequestMapping("/general")
+public class GeneralController {
+    @Autowired
+    private GeneralService generalService;
+    @Page
+    @RequestMapping("query")
+    public Object query(@RequestParam(value = "column", required = false,defaultValue = "*") String column,
+                        @RequestParam("function") String function,
+                        @RequestParam(value = "condition", required = false) String condition,
+                        @RequestParam(value = "pageNum", required = false) Integer pageNum,
+                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+    @RequestMapping("delete")
+    public void delete(@RequestParam("function") String function, @RequestParam("ids") String ids) {
+    @RequestMapping("insert")
+    public String insert(@RequestParam("function") String function, @RequestParam("jsonData") String jsonData) {
+    @RequestMapping("update")
+    public void update(@RequestParam("function") String function, @RequestParam("id") String id, @RequestParam("jsonData") String jsonData) {
+    @RequestLimit(value = 60000)
+    @RequestMapping("sendCode")
+    public void sendCode(@RequestParam("phone") String phone) {
+    @RequestMapping("upload")
+    public Result upload(@RequestParam MultipartFile file) throws IOException {
+    @RequestMapping("checkCode")
+    public int checkCode(@RequestParam("phone") String phone,@RequestParam("code") String code) {
+    @RequestMapping("sendMail")
+    public void sendMail(@RequestParam("host") String host,@RequestParam("title") String title,@RequestParam("content") String content) throws MessagingException {
+    @RequestMapping("sendSms")
+    public void sendSms(@RequestParam("phone") String phone,@RequestParam("code") String code,@RequestParam("results") List<String> results){
+
+```
+
+代码片段所涉及的完整函数或方法：
+```
+29|     @Page
+30|     @RequestMapping("query")
+31|     public Object query(@RequestParam(value = "column", required = false,defaultValue = "*") String column,
+32|                         @RequestParam("function") String function,
+33|                         @RequestParam(value = "condition", required = false) String condition,
+34|                         @RequestParam(value = "pageNum", required = false) Integer pageNum,
+35|                         @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+36|         CheckUtil.checkGeneral(column);
+37|         CheckUtil.checkGeneral(function);
+38|         CheckUtil.checkGeneral(condition);
+39|         //CheckUtil.checkColumn(column);
+40|         //CheckUtil.checkTable(function);
+41|         //CheckUtil.checkCondition(condition);
+42|         if(condition==null){
+43|             condition="1=1";
+44|         }
+45|         return generalService.query(column, function, condition);
+46|     }
+
+```
+
+上文内容是在当前代码文件及项目中提取的参考信息，接下来是你需要完成的任务。
+Please help me understand this code, with line numbers added for reference:
+```
+36|         CheckUtil.checkGeneral(column);
+37|         CheckUtil.checkGeneral(function);
+38|         CheckUtil.checkGeneral(condition);
+39|         //CheckUtil.checkColumn(column);
+40|         //CheckUtil.checkTable(function);
+41|         //CheckUtil.checkCondition(condition);
+42|         if(condition==null){
+43|             condition="1=1";
+44|         }
+45|         return generalService.query(column, function, condition);
+```
+Check if a signature comment already exists.
+If a method already contains comment information, just skip the method instead of generating the comment repeatedly and only output <[line_number] Do comments exist? Yes></[line_number]>.
+For each method without comments, write a concise Javadoc-style comment enclosed within <[line_number] Do comments exist? No> and </[line_number]>.
+Do not repeat the code! Just provide the clear, professional javadoc-style comments in Chinese.] wrapper_types:prompt]
+INFO[25949] Response Status: 200 OK and Body: {"v_v":"VM53776.28.12GPU0607","err":"0","qid":"65","chat_id":"9015_27_28"}
+INFO[25949] [COMMENT_BLOCK]: ends
+INFO[25949] Request POST /advance/commentBlock took 246.011329ms
+[GIN] 2025/02/21 - 09:34:02 | 200 |  246.060845ms | 192.168.188.105 | POST     "/advance/commentBlock"
+[GIN] 2025/02/21 - 09:34:02 | 200 |  246.106282ms | 192.168.188.105 | POST     "/advance/commentBlock"
+INFO[25949] [QUERY_CHAT_RESULT] starts
+INFO[25949] [QUERY_CHAT_RESULT]: ends
+INFO[25949] Request POST /advance/get_results took 279.09µs
+[GIN] 2025/02/21 - 09:34:02 | 200 |      329.84µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:02 | 200 |     359.726µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25949] [ADV_COMMENT_BLOCK_TASK] funcShow:
+INFO[25949] [QUERY_CHAT_RESULT] starts
+INFO[25949] [QUERY_CHAT_RESULT]: ends
+INFO[25949] Request POST /advance/get_results took 176.771µs
+[GIN] 2025/02/21 - 09:34:02 | 200 |     220.464µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:02 | 200 |     240.782µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25949] [QUERY_CHAT_RESULT] starts
+INFO[25949] [QUERY_CHAT_RESULT]: ends
+INFO[25949] Request POST /advance/get_results took 266.107µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |      313.69µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |     342.572µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25949] [QUERY_CHAT_RESULT] starts
+INFO[25949] [QUERY_CHAT_RESULT]: ends
+INFO[25949] Request POST /advance/get_results took 182.415µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |      219.72µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |     242.395µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25949] [ADV_COMMENT_BLOCK_TASK] funcShow:
+INFO[25949] [QUERY_CHAT_RESULT] starts
+INFO[25949] [QUERY_CHAT_RESULT]: ends
+INFO[25949] Request POST /advance/get_results took 229.609µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |     315.102µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |     339.602µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 170.144µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |      205.64µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |     227.105µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [ADV_COMMENT_BLOCK_TASK] funcShow:
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 197.036µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |     236.804µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |     258.689µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 223.716µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |     263.211µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |     285.268µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 189.22µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |      228.28µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |     247.593µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 210.094µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |     250.643µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |      276.53µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 225.836µs
+[GIN] 2025/02/21 - 09:34:03 | 200 |     280.167µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:03 | 200 |      307.57µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 208.557µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |      250.16µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     276.666µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 150.671µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |     177.364µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     195.695µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [QUERY_CHAT_RESULT] starts
+INFO[25950] [QUERY_CHAT_RESULT]: ends
+INFO[25950] Request POST /advance/get_results took 216.161µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |     259.261µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |      288.23µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25950] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @param column 查询的列名，默认为所
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 190.531µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |     230.278µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     251.169µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 202.771µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |     243.216µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     266.507µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @param column 查询的列名，默认为所有列（"*"）
+     * @para
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 175.368µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |     213.516µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     231.416µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 226.189µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |     267.861µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     293.021µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 169.141µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |     207.872µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     226.012µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @param column 查询的列名，默认为所有列（"*"）
+     * @param function 查询的表名
+     * @
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 182.466µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |      221.28µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     239.866µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 216.948µs
+[GIN] 2025/02/21 - 09:34:04 | 200 |     262.255µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:04 | 200 |     289.695µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @param column 查询的列名，默认为所有列（"*"）
+     * @param function 查询的表名
+     * @param condition 查询条件，可选参数
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 238.39µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     280.287µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |     306.745µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 157.935µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     200.216µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |     226.021µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [QUERY_CHAT_RESULT] starts
+INFO[25951] [QUERY_CHAT_RESULT]: ends
+INFO[25951] Request POST /advance/get_results took 241.697µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     287.253µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |     316.912µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25951] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @param column 查询的列名，默认为所有列（"*"）
+     * @param function 查询的表名
+     * @param condition 查询条件，可选参数
+     * @param pageNum 页码，
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 236.701µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     278.374µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |     306.817µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 231.309µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     277.132µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |     302.539µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25952] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @param column 查询的列名，默认为所有列（"*"）
+     * @param function 查询的表名
+     * @param condition 查询条件，可选参数
+     * @param pageNum 页码，可选参数
+     * @param pageSize
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 188.641µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     227.407µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |     250.071µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 243.685µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     288.035µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |      315.02µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25952] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @param column 查询的列名，默认为所有列（"*"）
+     * @param function 查询的表名
+     * @param condition 查询条件，可选参数
+     * @param pageNum 页码，可选参数
+     * @param pageSize 每页大小，可选参数
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 250.552µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     295.114µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |     323.443µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 250.497µs
+[GIN] 2025/02/21 - 09:34:05 | 200 |     292.795µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:05 | 200 |     322.043µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 232.793µs
+[GIN] 2025/02/21 - 09:34:06 | 200 |     280.022µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:06 | 200 |     303.779µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25952] [ADV_COMMENT_BLOCK_TASK] funcShow:     /**
+     * 查询通用数据，支持分页和条件筛选。
+     *
+     * @param column 查询的列名，默认为所有列（"*"）
+     * @param function 查询的表名
+     * @param condition 查询条件，可选参数
+     * @param pageNum 页码，可选参数
+     * @param pageSize 每页大小，可选参数
+     * @return 查询结果
+     */
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 219.005µs
+[GIN] 2025/02/21 - 09:34:06 | 200 |     260.255µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:06 | 200 |     283.276µs | 192.168.188.105 | POST     "/advance/get_results"
+INFO[25952] [QUERY_CHAT_RESULT] starts
+INFO[25952] [QUERY_CHAT_RESULT]: ends
+INFO[25952] Request POST /advance/get_results took 195.532µs
+[GIN] 2025/02/21 - 09:34:06 | 200 |     245.219µs | 192.168.188.105 | POST     "/advance/get_results"
+[GIN] 2025/02/21 - 09:34:06 | 200 |     268.235µs | 192.168.188.105 | POST     "/advance/get_results"
+[177/192]0xc0011ba3c0[177/192]0xc0007f4840[208/208]0xc0003644e0[255/256]0xc00080e800[286/288]0xc001794000[329/352]0xc0001a4dc0[356/384]0xc0010a0900[388/416]0xc00111c340[431/448]0xc000de28c0[460/480]0xc000ebe5a0[492/512]0xc001525600[520/576]0xc0010b2b40[559/576]0xc000e79680[586/640]0xc001482500panic: runtime error: slice bounds out of range [-7:]
+
+goroutine 1430 [running]:
+middle-service/service/advance.(*CommentBlockTask).extractShowPredictionsFunc(0xc0016500f0, {0xc0010a1380?, 0x280?}, 0x1)
+	/data/jenkins/workspace/aixMiddleService/service/advance/advance_comment_block_resolver.go:67 +0x64a
+middle-service/service/advance.(*CommentBlockTask).Run(0xc0016500f0, 0xc001b97220)
+	/data/jenkins/workspace/aixMiddleService/service/advance/advance_comment_block_task.go:53 +0x205
+middle-service/service/chatTask.(*TaskManager).StartTask.func1()
+	/data/jenkins/workspace/aixMiddleService/service/chatTask/ChatTask.go:70 +0x44
+created by middle-service/service/chatTask.(*TaskManager).StartTask in goroutine 930
+	/data/jenkins/workspace/aixMiddleService/service/chatTask/ChatTask.go:68 +0x14f

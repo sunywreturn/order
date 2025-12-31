@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartearth.order.mapper.GeneralMapper">
+
+    <select id="query" resultType="map">
+        select ${column} from ${table} where ${condition}
+    </select>
+
+    <delete id="deleteByPrimaryKey">
+        delete from ${table} where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="data.id">
+        insert into ${table}
+        <foreach collection="data" index="key" item="value" open="(" close=")" separator=",">
+            ${key}
+        </foreach>
+        values
+        <foreach collection="data" index="key" item="value" open="(" close=")" separator=",">
+            #{value}
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="map">
+        update ${table} set
+        <foreach collection="data" index="key" item="value" separator=",">
+            <if test="value !=null ">
+                ${key} = #{value}
+            </if>
+        </foreach>
+        where id = #{id}
+    </update>
+
+</mapper>
