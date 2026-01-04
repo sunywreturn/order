@@ -22,4 +22,24 @@ public class ResponseUtil {
         out.flush();
         out.close();
     }
+
+    /**
+     * 向HTTP响应中发送消息
+     *
+     * @param response HttpServletResponse对象，用于设置响应属性和输出内容
+     * @param msg 要返回的消息内容
+     */
+    public static void send(HttpServletResponse response, String msg) {
+        try {
+            response.setContentType("application/json;charset=UTF-8");
+            Response errorResponse = Response.getFailResult();
+            errorResponse.setMsg(msg);
+            PrintWriter out = response.getWriter();
+            out.print(JsonUtil.toJson(errorResponse));
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

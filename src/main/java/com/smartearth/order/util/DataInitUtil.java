@@ -63,4 +63,12 @@ public class DataInitUtil {
         return timestamp + randomNum;
     }
 
+    /**
+     * 生成UUID
+     * @return UUID字符串
+     */
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
 }

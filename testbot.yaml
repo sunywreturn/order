@@ -1,12 +1,12 @@
 # TestBot 配置文件
-# 生成于 2025-11-17T05:50:31.859Z
+# 生成于 2025-12-31T09:14:06.324Z
 
 # 项目基本信息
 project:
   name: order
   language: Java # 主要编程语言，目前仅支持Java
   description: # 项目简短描述
-  baseDir: /Users/edy/java_project/order
+  baseDir: c:\Users\Administrator\Desktop\testbot\order
 
 # 测试用例生成配置
 testGeneration:
@@ -26,10 +26,10 @@ mockGeneration:
 environment:
   buildTools:
     name: Maven # 目前仅支持Maven或Gradle
-    version: 2.2.1.RELEASE # 构建工具版本
+    version: 3.9.0 # 构建工具版本，建议使用默认值，不同版本对测试运行影响很小
 
   jdk: # jdk配置
-    version: unknown # jdk版本
+    version: 20 # jdk版本
 
 # 测试运行器配置
 runner:
@@ -39,7 +39,7 @@ runner:
     - name: cloud-test-runner # 运行器名称示例
       type: cloud # local 或 cloud
       description: # 运行器描述
-      maxParallel: 4 # 最大并行执行数，默认为4
+      maxParallel: 2 # 最大并行执行数，默认为2
       endpoint: https://api.my-cloud-runner.com/v1/jobs # 云端运行器API端点
       authToken: your-secure-auth-token-here # 云端运行器认证token
 
